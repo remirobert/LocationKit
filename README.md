@@ -32,6 +32,30 @@ carthage bootstrap
 
 ## Usage
 
+- Distance:
+```Swift
+let distanceLocation = LocationKit.distanceFromLocation(location, toLocation: location2)
+let distanceLocation = LocationKit.distanceFromCurrentLocationToLocation(location)
+```
+
+- Location:
+```Swift
+//If you need to get the location juste one time, call this method
+LocationKit.updateLocationOnce { (location, error) -> Void in
+  if let location = location {
+    self.currentLocation = location
+  }
+}
+
+//Start tracking location :
+//start update location and get notified, when it's updated
+LocationKit.startUpdatingLocation { (location, error) -> Void in
+  if let location = location {
+    self.newLocation = location
+  }
+}
+
+```
 
 
 ## Contributors
