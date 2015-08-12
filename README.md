@@ -5,7 +5,9 @@
 </br>
 ![license MIT](http://img.shields.io/badge/license-MIT-orange.png) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-Location wrapper around CoreLocation in swift.
+LocationKit is a wrapper of CoreLocation.
+The point is to ease the API, and use of CoreLocation.
+Written in swift.
 
 ## Requirements
 
@@ -27,6 +29,10 @@ then
 ```bash
 carthage bootstrap
 ```
+
+## Usage
+
+
 
 ## Contributors
 
