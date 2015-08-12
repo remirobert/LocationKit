@@ -27,3 +27,17 @@ then
 ```bash
 carthage bootstrap
 ```
+
+## Contributors
+
+* [Rémi ROBERT](https://github.com/remirobert), creator. ( ﾟヮﾟ)
+
+## License
+
+`TextDrawer` is released under an [MIT License][mitLink]. See `LICENSE` for details.
+
+>**Copyright &copy; 2015 Rémi ROBERT.**
+
+*Please provide attribution, it is greatly appreciated.*
+
+[mitLink]:http://opensource.org/licenses/MIT
