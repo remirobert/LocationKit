@@ -9,8 +9,8 @@
 import UIKit
 import CoreLocation
 
-public typealias geocodeResultBlock = (placemarks: [CLPlacemark]?, error: NSError?) -> Void
-public typealias updateLocationResultblock = (location: CLLocation?, error: NSError?) -> Void
+typealias geocodeResultBlock = (placemarks: [CLPlacemark]?, error: NSError?) -> Void
+typealias updateLocationResultblock = (location: CLLocation?, error: NSError?) -> Void
 
 public class LocationKit: NSObject, CLLocationManagerDelegate {
     var geoCoder: CLGeocoder!
@@ -87,7 +87,7 @@ public extension LocationKit {
         currentLocationWithCoordinates(coord)
     }
     
-    public class func setCurrentLocationByAddress(address: String, block: geocodeResultBlock) {
+    internal class func setCurrentLocationByAddress(address: String, block: geocodeResultBlock) {
         sharedInstance.geoCoder.geocodeAddressString(address, completionHandler: { (placeMarks:[AnyObject]!, error: NSError!) -> Void in
             if error != nil {
                 block(placemarks: nil, error: error)
@@ -105,7 +105,7 @@ public extension LocationKit {
 
 public extension LocationKit {
     
-    public class func geocodeAddressString(address: String, block: geocodeResultBlock) {
+    internal class func geocodeAddressString(address: String, block: geocodeResultBlock) {
         sharedInstance.geoCoder.geocodeAddressString(address, completionHandler: { (placemarks: [AnyObject]!, error: NSError!) -> Void in
             if error != nil {
                 block(placemarks: nil, error: error)
@@ -116,7 +116,7 @@ public extension LocationKit {
         })
     }
     
-    public class func reverseGeocodeLocation(location: CLLocation, block: geocodeResultBlock) {
+    internal class func reverseGeocodeLocation(location: CLLocation, block: geocodeResultBlock) {
         sharedInstance.geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks: [AnyObject]!, error: NSError!) -> Void in
             if error != nil {
                 block(placemarks: nil, error: error)
@@ -127,28 +127,28 @@ public extension LocationKit {
         })
     }
     
-    public class func reverseGeocodeCurrentLocation(block: geocodeResultBlock) {
+    internal class func reverseGeocodeCurrentLocation(block: geocodeResultBlock) {
         reverseGeocodeLocation(sharedInstance.currentLocation, block: block)
     }
     
-    public class func reverseGeocodeCoordinates(coord: CLLocationCoordinate2D, block: geocodeResultBlock) {
+    internal class func reverseGeocodeCoordinates(coord: CLLocationCoordinate2D, block: geocodeResultBlock) {
         let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
         reverseGeocodeLocation(location, block: block)
     }
     
-    public class func reverseGeocodeLatitude(latitude: CLLocationDegrees, longitude: CLLocationDegrees, block: geocodeResultBlock) {
+    internal class func reverseGeocodeLatitude(latitude: CLLocationDegrees, longitude: CLLocationDegrees, block: geocodeResultBlock) {
         let coord = CLLocationCoordinate2DMake(latitude, longitude)
         reverseGeocodeCoordinates(coord, block: block)
     }
     
-    public class func cancelGeocode() {
+    internal class func cancelGeocode() {
         sharedInstance.geoCoder.cancelGeocode()
     }
 }
 
 public extension LocationKit {
     
-    public class func startUpdatingLocation(block: updateLocationResultblock) {
+    internal class func startUpdatingLocation(block: updateLocationResultblock) {
         let instance = sharedInstance
         if !instance.isUpdatingLocation {
             instance.isUpdatingLocation = true
@@ -157,28 +157,28 @@ public extension LocationKit {
         }
     }
     
-    public class func updateLocationOnce(block: updateLocationResultblock) {
+    internal class func updateLocationOnce(block: updateLocationResultblock) {
         sharedInstance.isUpdatingLocationOnce = true
         startUpdatingLocation(block)
     }
     
-    public class func stopUpdatingLocation() {
+    internal class func stopUpdatingLocation() {
         let instance = sharedInstance
         instance.isUpdatingLocationOnce = false
         instance.isUpdatingLocation = false
         instance.locationManager.stopUpdatingLocation()
     }
     
-    public class func locationManager(manager: CLLocationManager, didUpdateLocations locations: [AnyObject]) {
+    internal class func locationManager(manager: CLLocationManager, didUpdateLocations locations: [AnyObject]) {
         updateCurrentLocationAndNotify(locations as! [CLLocation])
     }
     
-    public class func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+    internal class func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         let locations = [oldLocation, newLocation]
         updateCurrentLocationAndNotify(locations)
     }
     
-    public class func updateCurrentLocationAndNotify(locations: [CLLocation]) {
+    internal class func updateCurrentLocationAndNotify(locations: [CLLocation]) {
         let instance = sharedInstance
         if !instance.isUpdatingLocation {
             return
@@ -190,7 +190,7 @@ public extension LocationKit {
         instance.blockUpdateLocation(location: instance.currentLocation, error: nil)
     }
     
-    public class func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    internal class func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         let instance = sharedInstance
         if instance.isUpdatingLocationOnce {
             stopUpdatingLocation()
@@ -201,11 +201,11 @@ public extension LocationKit {
 
 public extension LocationKit {
     
-    public class func distanceFromLocation(from: CLLocation, toLocation to:CLLocation) -> CLLocationDistance {
+    internal class func distanceFromLocation(from: CLLocation, toLocation to:CLLocation) -> CLLocationDistance {
         return to.distanceFromLocation(from)
     }
     
-    public class func distanceFromCurrentLocationToLocation(to: CLLocation) -> CLLocationDistance {
+    internal class func distanceFromCurrentLocationToLocation(to: CLLocation) -> CLLocationDistance {
         return distanceFromLocation(sharedInstance.currentLocation, toLocation: to)
     }
 }
