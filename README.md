@@ -34,7 +34,7 @@ carthage bootstrap
 
 ## License
 
-`TextDrawer` is released under an [MIT License][mitLink]. See `LICENSE` for details.
+`LocationKit` is released under an [MIT License][mitLink]. See `LICENSE` for details.
 
 >**Copyright &copy; 2015 Rémi ROBERT.**
 
