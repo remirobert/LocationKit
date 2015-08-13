@@ -9,6 +9,8 @@ LocationKit is a wrapper of CoreLocation.
 The point is to ease the API, and use of CoreLocation.
 Written in swift.
 
+**In development don't use it right now**
+
 ## Requirements
 
 * iOS 8
